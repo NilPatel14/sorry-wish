@@ -1,11 +1,100 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import "../../public/style.css";
 ---
 
 <Layout>
-	<Welcome />
+  <!-- Login Section -->
+  <div class="glass" id="loginSection">
+    <h2>Private Sorry Message 💖</h2>
+    <input type="text" id="name" placeholder="Enter Your Name" />
+    <input type="password" id="password" placeholder="Enter Password" />
+    <button onclick="login()">Open My Heart</button>
+    <p id="error" style="color:#ff8080;margin-top:10px;"></p>
+  </div>
+
+  <!-- Cards Section -->
+  <div class="glass" id="cardsSection">
+    <div class="card">
+      <h2 id="cardTitle"></h2>
+      <p id="cardMessage"></p>
+    </div>
+    <div class="controls">
+      <button onclick="prevCard()" style="margin-right: 5px;">Previous</button>
+      <button onclick="nextCard()">Next</button>
+    </div>
+  </div>
+
+
+<script is:inline>
+// Simple password (change this)
+const correctPassword = "विशाखा ✨";
+
+// Cards dictionary
+const cards = [
+  {
+    title: "I'm Truly Sorry 💔",
+    message: "I never meant to hurt you. My heart regrets every moment you felt pain."
+  },
+  {
+    title: "🌙",
+    message: "કંપની ના daratumumab ની બેચ ના કોલ ચાલું હતા અને એમાં હું તને કોલ કરીને હેરાન કરી એના માટે તું મને માફ કરી દે..I'm Sorry 🤌(I know it's too late to say sorry but accept it)"
+  },
+  {
+    title: "Please Forgive Me 🙏",
+    message: "I promise to grow, to understand you better, and to love you softer."
+  },
+  {
+    title: "Forever Us 💞",
+    message: "No mistake is stronger than what we share. Let's heal and move forward together."
+  }
+];
+
+let current = 0;
+let userName = "";
+
+// Login function
+function login(){
+  const nameInput = document.getElementById("name").value.trim();
+  const passwordInput = document.getElementById("password").value.trim();
+  const error = document.getElementById("error");
+
+  if(nameInput === "" || passwordInput === ""){
+    error.innerText = "Please enter both name and password.";
+    return;
+  }
+
+  if(passwordInput === correctPassword){
+    userName = nameInput;
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("cardsSection").style.display = "block";
+    showCard(current);
+  }else{
+    error.innerText = "Wrong password 💔";
+  }
+}
+
+// Show card
+function showCard(index){
+  document.getElementById("cardTitle").innerText = 
+    cards[index].title + " " + userName;
+  document.getElementById("cardMessage").innerText = 
+    cards[index].message;
+}
+
+// Next & Previous (No Loop)
+function nextCard(){
+  if(current < cards.length - 1){
+    current++;
+    showCard(current);
+  }
+}
+
+function prevCard(){
+  if(current > 0){
+    current--;
+    showCard(current);
+  }
+}
+</script>
 </Layout>
